@@ -26,16 +26,15 @@
   <main>
     {{- block "main" . }}{{- end }}
   </main>
-  <footer>
-    {{- partial "footer.html" . -}}
-  </footer>
 
-  <!-- A partial to be overwritten by the user.
-  Simply place a custom_body.html into
-  your local /layouts/partials-directory -->
   {{- partial "custom_body.html" . -}}
 
-  {{ partial "custom_footer.html" . }}
+  {{ $footerContent := partial "footer.html" . }}
+  {{ if ne (trim $footerContent "\n") "" }}
+    <footer>
+      {{- $footerContent -}}
+    </footer>
+  {{ end }}
   {{ range .Site.Params.plugins_js }}
     <script src="{{ . }}"></script>
   {{ end }}
